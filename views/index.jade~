@@ -29,6 +29,6 @@ script
   $('#kudoshare-button').click(function() {
     var socket = io.connect(); 
     
-    socket.emit('post', { from: $('#kudo-from').attr('value'), to: $('#kudo-to').attr('value'), message: $('#kudo-message').attr('value') }, { host: config.address });
+    socket.emit('post', { from: $('#kudo-from').attr('value'), to: $('#kudo-to').attr('value'), message: $('#kudo-message').attr('value') }, { host: config.address }, {port: config.port});
     return false;
   });
