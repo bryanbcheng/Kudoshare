@@ -31,7 +31,7 @@ app.configure('production', function(){
 
 app.get('/', function(req, res){
   res.render('index', {
-    title: 'Kudoshare',
+    title: 'KudoSHARE',
     address: app.address().address,
     port: app.address().port
   });

@@ -8,15 +8,29 @@ var db = new Db('kudoshare', new Server(mongodb_host, mongodb_port, {}), {});
 db.open(function() {});
 
 exports.start = function(io) {
-  io.sockets.on('connection', function(socket) {  
+  io.sockets.on('connection', function(socket) { 
+    db.collection('kudos', function(err, collection) {
+      collection.find({}, { limit:10, sort:[['timestamp', 'desc']] }).toArray(function(err, docs) {
+        socket.emit('feed', docs);
+      });
+    });
+    
     socket.on('post', function(kudo, host) {
-      // add to database
+      kudo.timestamp = new Date();
       
       db.collection('kudos', function(err, collection) {
-        collection.insert({ 'from':kudo.from, 'to':kudo.to, 'message':kudo.message });
+        collection.insert({ 'from':kudo.from, 'to':kudo.to, 'message':kudo.message, 'timestamp':kudo.timestamp });
       });
       
       io.sockets.emit('new-kudo', kudo);
+    });
+    
+    socket.on('get', function(time) {
+      db.collection('kudos', function(err, collection) {
+        collection.find({timestamp: {$lt: new Date(time)}}, { limit:10, sort:[['timestamp', 'desc']] }).toArray(function(err, docs) {
+          socket.emit('more-kudos', docs)
+        });
+      });
     });
     
     socket.on('message', function(message) {

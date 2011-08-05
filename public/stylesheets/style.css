@@ -1,8 +1,243 @@
+html{color:#000;background:#FFF;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0;}table{border-collapse:collapse;border-spacing:0;}fieldset,img{border:0;}address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal;}li{list-style:none;}caption,th{text-align:left;}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}q:before,q:after{content:'';}abbr,acronym{border:0;font-variant:normal;}sup{vertical-align:text-top;}sub{vertical-align:text-bottom;}input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit;}input,textarea,select{*font-size:100%;}legend{color:#000;}
+
+/***** CSS RESET *****/
+
 body {
-  padding: 50px;
+  background: #EED3E6;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-a {
-  color: #00B7FF;
+#wrapper {
+    background: url(/images/background.png) repeat-x #EDD9F5;
+    border-bottom: 1px solid #E0AED1;
+    overflow: auto;
+	width: 100%
 }
+
+#container {
+    margin: 0 auto;
+    padding: 30px 0;
+    min-height: 400px;
+    width: 1000px;
+}
+
+#header {
+    width: 225px;
+    float: left;
+}
+
+#main-container {
+    background: white;
+    -moz-box-shadow: 0 0 4px 1px #554455;
+    -webkit-box-shadow: 0 0 4px 1px #554455;
+    box-shadow: 0 0 4px 1px #554455;
+    margin: 0 0 30px;
+    padding: 0 0 10px;
+    position: relative;
+    width: 600px;
+    float: left;
+}
+
+#location {
+    background: url("/images/header-background.png");
+    height: 50px;
+}
+
+#location h2 {
+    -moz-box-shadow: 0 1px 4px 1px #554455;
+    -webkit-box-shadow: 0 1px 4px 1px #554455;
+    box-shadow: 0 1px 4px 1px #554455;
+    color: white;
+    font-size: 2em;
+    line-height: 50px;
+    padding: 0 10px;
+    text-shadow: 1px 1px 3px #DDDDDD;
+}
+
+#location h2 strong {
+    font-weight: bold;
+    color: #e498fe;
+    text-shadow: 1px 1px 3px #222222;
+}
+
+/***** KUDO FORM CSS *****/
+
+#kudoform {
+    -moz-border-image: url("/images/border-bottom.png") 1 1 1 1 repeat;
+    -webkit-border-image: url("/images/border-bottom.png") 1 1 1 1 repeat;
+    border-image: url("/images/border-bottom.png") 1 1 1 1 repeat;
+    border-bottom: 1px dashed #B98AD8;
+    border-width: 0 0 1px;
+    padding: 10px;
+}
+
+#kudoform table {
+    width: 100%;
+}
+
+#kudoform td {
+    height: 30px;
+}
+
+#kudoform td.label {
+    padding: 0 10px 0 0;
+}
+
+#kudoform input[type="text"], #kudoform textarea {
+    background: #EDD9F5;
+    border: 1px solid #C4B1C7;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    -moz-box-shadow: 0 1px 3px #B98AD8 inset;
+    -webkit-box-shadow: 0 1px 3px #B98AD8 inset;
+    box-shadow: 0 1px 3px #B98AD8 inset;
+    color: #909090;
+    padding: 5px;
+}
+
+#kudoform input[type="text"]:focus, #kudoform textarea:focus {
+    background: white;
+    border: 1px solid #B98AD8;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    color: #444444;
+}
+
+#kudoform input[type="text"] {
+    width: 210px;
+}
+
+#kudoform textarea {
+    width: 565px;
+}
+
+#kudoform input[type="submit"] {
+    margin: 10px 0;
+}
+
+/***** END KUDO FORM CSS *****/
+
+/***** KUDO FEED CSS *****/
+
+#feed {
+    min-height: 250px;
+}
+
+#feed .kudo {
+    min-height: 35px;
+    padding: 10px;
+    -moz-border-image: url("/images/border-bottom.png") 1 1 1 1 repeat;
+    -webkit-border-image: url("/images/border-bottom.png") 1 1 1 1 repeat;
+    border-image: url("/images/border-bottom.png") 1 1 1 1 repeat;
+    border-bottom: 1px dashed #B98AD8;
+    border-width: 0 0 1px;
+}
+
+#feed img {
+    width: 35px;
+    float: left;
+    margin: 0 10px 0 0;
+}
+
+#feed .kudo strong {
+    color: #1D72A3;
+    border-bottom: 1px dash 
+}
+
+#feed .kudo:hover {
+    background: #F6F0FA;
+}
+
+#feed .kudo span {
+    font-size: 12px;
+}
+
+#feed .more-kudo {
+    width: 200px;
+    margin: 0 auto;
+    padding: 10px;
+    text-align: center;
+}
+
+#feed .more-kudo a {
+    -moz-border-radius: 6px 6px 6px 6px;
+    border: 1px solid #B98AD8;
+    color: #AF03E9;
+    margin: 0 44px;
+    padding: 5px;
+    text-decoration: none;
+    display: block;
+    width: 100px;
+}
+
+#feed .more-kudo a:hover {
+    background: #F6F0FA;
+    color: #8b3fbd;
+}
+
+img#loader {
+    width: 32px;
+    margin: 0 284px;
+    padding: 100px 0;
+}
+
+/***** END KUDO FEED CSS *****/
+
+#login-panel {
+    background: #f1cbfe;
+    border: 1px solid #B98AD8;
+    border-left: none;
+    -moz-border-radius: 0 7px 7px 0;
+    -webkit-border-radius: 0 7px 7px 0;
+    border-radius: 0 7px 7px 0;
+    -moz-box-shadow: 0 0 2px 0 #554455 inset;
+    -webkit-box-shadow: 0 0 2px 0 #554455 inset;
+    box-shadow: 0 0 2px 0 #554455 inset;
+    float: left;
+    height: 250px;
+    margin-top: 50px;
+    padding: 5px 5px 5px 10px;
+    width: 155px;
+}
+
+#login-panel h3 {
+    color: #570274;
+    font-size: 20px;
+    padding: 10px 0 0;
+}
+
+#login-panel hr {
+    margin: 20px 0;
+}
+
+#fb-root {
+    display: none;
+}
+
+/***** FOOTER CSS *****/
+
+#footer {
+    clear: both;
+    height: 150px;
+    margin: 0 200px;
+    padding: 10px 0;
+}
+
+#footer img.watermark {
+    height: 150px;
+    float: left;
+}
+
+#footer div.copyright {
+    float: left;
+    margin: 30px 0 0 200px;
+    width: 400px;
+}
+
+#footer div.social-media {
+
+}
+
+/***** END FOOTER CSS *****/

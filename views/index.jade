@@ -1,8 +1,3 @@
-h1= title
-p Welcome to #{title}
-p Address is #{address}
-p Port is #{port}
-
 script(src='./socket.io/socket.io.js')
 script
   var config = {};
@@ -10,25 +5,54 @@ script
   config.port = '#{port}';
 script(src='./javascripts/app.js')
 
-form(method='post', data-remote='true')
-  label Name
-  input(type='text', id='kudo-from', value='Anonymous')
-  label Kudos to
-  input(type='text', id='kudo-to', value='Anonymous')
-  label for
-  input(type='text', id='kudo-message', value='kudos')
-  input(type='submit', value='Share')#kudoshare-button
 
-div#feed
-  div.kudo
-    p Bryan: Kudos to David for washing the dishes
-  div.kudo
-    p David: Kudos to Thien for driving
+#wrapper
+  #container
+    #header
+      img(src='/images/logo.png')
+      //h1= title
+      //p Welcome to #{title}
+      //p Address is #{address}
+      //p Port is #{port}
 
-script
-  $('#kudoshare-button').click(function() {
-    var socket = io.connect(); 
+    #main-container
+      #location
+        h2
+          strong KUDOS 
+          span from around the world
+      form(method='post', data-remote='true')#kudoform
+        table
+          tr
+            td.label Name:
+            td
+              input(type='text', id='kudo-from', value='Anonymous')
+            td.label Kudos to:
+            td
+              input(type='text', id='kudo-to', value='Anonymous')
+          tr
+            td(colspan=2) Thanks for:
+          tr
+            td(colspan=4)
+              textarea(id='kudo-message', value='kudos')
+        input(type='submit', value='Share')#kudoshare-button
+
+      #feed
+        img#loader(src='/images/loader.gif')
     
-    socket.emit('post', { from: $('#kudo-from').attr('value'), to: $('#kudo-to').attr('value'), message: $('#kudo-message').attr('value') }, { host: config.address });
-    return false;
-  });
+    #login-panel
+      !=partial('fblogin')
+    script(src="http://connect.facebook.net/en_US/all.js")
+    script(src="./javascripts/fb.js")
+
+
+#footer
+  img(src='/images/logo-watermark.png').watermark
+  .copyright © Copyright 2011 Toucan Labs, All Rights Reserved
+  .social-media
+    p
+      fb:like
+
+
+  
+
+script(src='./javascripts/feed.js')
