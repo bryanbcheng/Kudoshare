@@ -1,4 +1,6 @@
 (function() {
+    $('#kudoform').get(0).reset();
+    
     $('#kudo-from, #kudo-to').each(function() {
         var default_value = $(this).attr('value');
         $(this).focus(function() {
@@ -13,7 +15,9 @@
     $('#kudoshare-button').click(function() {
         var socket = io.connect();
 
-        socket.emit('post', { from: $('#kudo-from').attr('value'), to: $('#kudo-to').attr('value'), message: $('#kudo-message').attr('value') }, { host: config.address });
+        socket.emit('post', { from: $('#kudo-from').attr('value'), to: $('#kudo-to').attr('value'), message: $('#kudo-message').attr('value'), fb: loggedIn });
+        
+        publish("Kudos to " + $('#kudo-to').attr('value') + " for " + $('#kudo-message').attr('value'));
         $('#kudoform').get(0).reset();
         return false;
     });

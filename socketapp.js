@@ -15,11 +15,15 @@ exports.start = function(io) {
       });
     });
     
-    socket.on('post', function(kudo, host) {
+    socket.on('post', function(kudo) {
       kudo.timestamp = new Date();
       
       db.collection('kudos', function(err, collection) {
-        collection.insert({ 'from':kudo.from, 'to':kudo.to, 'message':kudo.message, 'timestamp':kudo.timestamp });
+        if (kudo.fb) {
+          collection.insert({ 'from':kudo.from, 'to':kudo.to, 'message':kudo.message, 'fb':true, 'fb_username':kudo.fb.username, 'timestamp':kudo.timestamp })
+        } else {
+          collection.insert({ 'from':kudo.from, 'to':kudo.to, 'message':kudo.message, 'timestamp':kudo.timestamp });
+        }
       });
       
       io.sockets.emit('new-kudo', kudo);

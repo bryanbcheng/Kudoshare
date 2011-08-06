@@ -1,4 +1,5 @@
 var friends = null;
+var loggedIn = false;
 
 window.fbAsyncInit = function() {
     FB.init({appId: '174692459266434', status: true, cookie: true,
@@ -25,8 +26,11 @@ window.fbAsyncInit = function() {
 }());
 
 function login() {
+    var fp = $('#login-panel').children('.facepile').detach();
     FB.api('me', function(response) {
-        $('#login-panel').html("<img src='https://graph.facebook.com/" + response.username + "/picture'/><h3>" + response.name + "</h3");
+        $('#login-panel').html("<img src='http://graph.facebook.com/" + response.username + "/picture'/><h3>" + response.name + "</h3><hr>");
+        $('#login-panel').append(fp);
+        loggedIn = response;
         $('#kudo-from').attr('value', response.name);
     });
         
@@ -34,3 +38,25 @@ function login() {
         friends = response.data;
     });
 };
+
+function publish(msg) {
+    FB.api('/me/feed', 'post', {
+        name: 'KudoSHARE',
+        message: msg,
+        picture: 'https://fbcdn-photos-a.akamaihd.net/photos-ak-snc1/v43/18/174692459266434/app_1_174692459266434_5640.gif',
+        caption: 'Making Thank You Social',
+        description: 'Need description =/.'
+    });
+/*
+FB.ui(
+   {
+     method: 'feed',
+     app_id: '174692459266434',
+     name: 'KudoSHARE',
+     display: 'popup',
+     picture: 'http://localhost:8888/images/logo.png',
+     caption: 'Making Thank You Social',
+     description: 'Need description =/.'
+   }
+ );*/
+}

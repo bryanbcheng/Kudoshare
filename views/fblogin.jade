@@ -2,7 +2,8 @@ h3 Log in to tag your friends!
 hr
 
 #fb-root
-fb:login-button(autologoutlink="true") Login with Facebook
+fb:login-button(autologoutlink="true", perms="publish_stream") Login with Facebook
 hr
 
-h3 SOMETHING GOES HERE
+div.facepile
+  fb:facepile(href="toucanlabs.com", width="150px", max_rows="1")
