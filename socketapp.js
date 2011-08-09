@@ -2,9 +2,30 @@ var mongodb = require('mongodb'),
     Db = mongodb.Db,
     Server = mongodb.Server;
 
-var mongodb_host = '0.0.0.0';
-var mongodb_port = 27017;
-var db = new Db('kudoshare', new Server(mongodb_host, mongodb_port, {}), {});
+if (process.env.VCAP_SERVICES) {
+  var env = JSON.parse(process.env.VCAP_SERVICES);
+  var mongo = env['mongodb-1.8'][0]['credentials'];
+} else {
+  var mongo = {"hostname":"localhost", "port":27017, "username":"", "password":"", "name":"", "db":"kudoshare"}
+}
+
+/*
+var generate_mongo_url = function(obj) {
+  obj.hostname = (obj.hostname || 'localhost');
+  obj.port = (obj.port || 27017);
+  obj.db = (obj.db || 'test');
+
+  if (obj.username && obj.password) {
+    return "mongodb://" + obj.username + ":" + obj.password + "@" + obj.hostname + ":" + obj.port + "/" + obj.db;
+  } else {
+    return "mongodb://" + obj.hostname + ":" + obj.port + "/" + obj.db;
+  }
+}
+
+var mongourl = generate_mongo_url(mongo);
+*/
+
+var db = new Db(mongo.db, new Server(mongo.hostname, mongo.port, {}), {});
 db.open(function() {});
 
 exports.start = function(io) {
@@ -20,7 +41,7 @@ exports.start = function(io) {
       
       db.collection('kudos', function(err, collection) {
         if (kudo.fb) {
-          collection.insert({ 'from':kudo.from, 'to':kudo.to, 'message':kudo.message, 'fb':true, 'fb_username':kudo.fb.username, 'timestamp':kudo.timestamp })
+          collection.insert({ 'from':kudo.from, 'to':kudo.to, 'to_id':kudo.to_id, 'message':kudo.message, 'fb':true, 'fb_id':kudo.fb.id, 'timestamp':kudo.timestamp })
         } else {
           collection.insert({ 'from':kudo.from, 'to':kudo.to, 'message':kudo.message, 'timestamp':kudo.timestamp });
         }

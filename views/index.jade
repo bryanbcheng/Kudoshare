@@ -20,7 +20,7 @@ script(src='./javascripts/app.js')
         h2
           strong KUDOS 
           span from around the world
-      form(method='post', data-remote='true')#kudoform
+      form(method='post', data-remote='true', autocomplete='off')#kudoform
         table
           tr
             td.label Name:
@@ -29,12 +29,16 @@ script(src='./javascripts/app.js')
             td.label Kudos to:
             td
               input(type='text', id='kudo-to', value='Anonymous')
+              input(type='hidden', id='kudo-to-id', value='')
           tr
             td(colspan=2) Thanks for:
           tr
             td(colspan=4)
               textarea(id='kudo-message', value='kudos')
         input(type='submit', value='Share')#kudoshare-button
+        #fb-post
+          input(type='checkbox', checked=true)
+          span Post to Facebook
 
       #feed
         img#loader(src='/images/loader.gif')

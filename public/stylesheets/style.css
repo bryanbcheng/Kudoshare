@@ -117,6 +117,42 @@ body {
     margin: 10px 0;
 }
 
+#fb-post {
+    background-image: url("http://static.ak.fbcdn.net/rsrc.php/v1/yf/r/_IKHHfAgFQe.png");
+    background-position: 0 -98px;
+    border-color: #29447E #29447E #1A356E;
+    border-style: solid;
+    border-width: 1px;
+    color: white;
+    cursor: default;
+    float: right;
+    font-family: 'Lucida Grande',Tahoma,Verdana,Arial,sans-serif;
+    font-size: 11px;
+    height: 30px;
+    line-height: 20px;
+    margin: 10px 3px 0;
+}
+
+#fb-post input[type=checkbox] {
+    margin: 0 0 0 5px;
+}
+
+#fb-post span {
+    display: inline-block;
+    height: 20px;
+    padding: 5px;
+}
+
+.ui-autocomplete-fb-picture {
+    width: 40px;
+    margin: 0 10px 0 0;
+    float: left;
+}
+
+.ui-autocomplete-label {
+    line-height: 40px;
+}
+
 /***** END KUDO FORM CSS *****/
 
 /***** KUDO FEED CSS *****/

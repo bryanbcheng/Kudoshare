@@ -14,10 +14,18 @@
 
     $('#kudoshare-button').click(function() {
         var socket = io.connect();
-
-        socket.emit('post', { from: $('#kudo-from').attr('value'), to: $('#kudo-to').attr('value'), message: $('#kudo-message').attr('value'), fb: loggedIn });
         
-        publish("Kudos to " + $('#kudo-to').attr('value') + " for " + $('#kudo-message').attr('value'));
+        //$('#kudo-to').attr('value')$.trim($('#kudo-to').attr('value'))
+
+        if (loggedIn && $('#kudo-to-hidden').attr('value') != "") {
+            socket.emit('post', { from: $('#kudo-from').attr('value'), to: $.trim($('#kudo-to').attr('value')), to_id: $('#kudo-to-id').attr('value'), message: $('#kudo-message').attr('value'), fb: loggedIn });
+        } else {
+            socket.emit('post', { from: $('#kudo-from').attr('value'), to: $.trim($('#kudo-to').attr('value')), message: $('#kudo-message').attr('value'), fb: loggedIn });
+        }
+        
+        if ($('#fb-post input[type=checkbox]').is(':checked')) {
+            publish("Kudos to " + $('#kudo-to').attr('value') + " for " + $('#kudo-message').attr('value'));
+        }
         $('#kudoform').get(0).reset();
         return false;
     });
@@ -31,5 +39,10 @@
         if ($(this).attr("value") == "")
             $(this).attr("value", msg);
     }
+    
+    $('#fb-post span').bind('click', function() {
+        var $checkbox = $(this).siblings(':checkbox');
+        $checkbox.attr('checked', !$checkbox.is(':checked'));
+    }).disableSelection();
 
 })();
