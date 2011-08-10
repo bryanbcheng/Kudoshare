@@ -9,15 +9,15 @@
         console.log(message);
     });
     
-    socket.on('feed', function(kudos) {
+    socket.on('feed', function(kudos, fb_id) {
         $('#loader').hide();
         $.each(kudos, function() {
             $('#feed').addKudo(this);
             $('.timeago').timeago();
         });
-        $('#feed').append("<div class='more-kudo'><a href='#'>See more...</a></div>");
+        $('#feed').append("<div class='more-kudo'><a href='#'>See more &#187;</a></div>");
         $('#feed .more-kudo a').click(function() {
-            socket.emit('get', kudos[kudos.length - 1].timestamp);
+            socket.emit('get', kudos[kudos.length - 1].timestamp, fb_id);
             return false;
         });
     });
@@ -62,6 +62,10 @@ $.fn.addKudo = function(kudo) {
     }
     $('.timeago').timeago();
 };
+
+function split( val ) {
+    return val.split( /,\s*/ );
+}
 
 function getLinks(to, to_id) {
     if (to_id == "") return to;

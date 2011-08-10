@@ -14,8 +14,6 @@
 
     $('#kudoshare-button').click(function() {
         var socket = io.connect();
-        
-        //$('#kudo-to').attr('value')$.trim($('#kudo-to').attr('value'))
 
         if (loggedIn && $('#kudo-to-hidden').attr('value') != "") {
             socket.emit('post', { from: $('#kudo-from').attr('value'), to: $.trim($('#kudo-to').attr('value')), to_id: $('#kudo-to-id').attr('value'), message: $('#kudo-message').attr('value'), fb: loggedIn });

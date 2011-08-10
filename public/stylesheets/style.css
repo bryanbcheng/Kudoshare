@@ -21,10 +21,59 @@ body {
     width: 1000px;
 }
 
+/***** HEADER CSS *****/
+
 #header {
     width: 225px;
     float: left;
 }
+
+#filter {
+    background: #f1cbfe;
+    border: 1px solid #B98AD8;
+    border-right: none;
+    -moz-border-radius: 4px 0 0 4px;
+    -webkit-border-radius: 4px 0 0 4px;
+    border-radius: 4px 0 0 4px;
+    -moz-box-shadow: 0 0 2px 0 #554455 inset;
+    -webkit-box-shadow: 0 0 2px 0 #554455 inset;
+    box-shadow: 0 0 2px 0 #554455 inset;
+    display: none;
+    float: right;
+    margin-top: 10px;
+    width: 155px;
+}
+
+#filter li:first-child {
+    border-bottom: 1px solid #B98AD8;
+}
+
+#filter li a {
+    display: block;
+    height: 20px;
+    line-height: 20px;
+    padding: 5px 15px;
+}
+
+#filter li a.selected {
+    background: url("/images/header-background.png") repeat scroll 0 -15px transparent;
+    -moz-border-radius: 4px 0 0 4px;
+    -webkit-border-radius: 4px 0 0 4px;
+    border-radius: 4px 0 0 4px;
+    color: white;
+    text-shadow: 1px 1px 3px #222222;
+}
+
+#filter li a:hover {
+    background: #955fc7;
+    -moz-border-radius: 4px 0 0 4px;
+    -webkit-border-radius: 4px 0 0 4px;
+    border-radius: 4px 0 0 4px;
+    color: white;
+    text-shadow: 1px 1px 3px #222222;
+}
+
+/***** END HEADER CSS *****/
 
 #main-container {
     background: white;

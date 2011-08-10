@@ -7,6 +7,8 @@ require.paths.unshift('./node_modules');
 var express = require('express');
 var io = require('socket.io');
 
+//process.env.NODE_ENV='production';
+
 var app = module.exports = express.createServer();
 
 // Configuration

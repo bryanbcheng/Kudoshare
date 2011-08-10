@@ -36,6 +36,7 @@ exports.start = function(io) {
       });
     });
     
+    // Posting a new kudo
     socket.on('post', function(kudo) {
       kudo.timestamp = new Date();
       
@@ -50,10 +51,37 @@ exports.start = function(io) {
       io.sockets.emit('new-kudo', kudo);
     });
     
-    socket.on('get', function(time) {
+    // Get 10 more kudos
+    socket.on('get', function(time, fb_id) {
       db.collection('kudos', function(err, collection) {
-        collection.find({timestamp: {$lt: new Date(time)}}, { limit:10, sort:[['timestamp', 'desc']] }).toArray(function(err, docs) {
-          socket.emit('more-kudos', docs)
+        if (fb_id == null) {
+          collection.find({timestamp: {$lt: new Date(time)}}, { limit:10, sort:[['timestamp', 'desc']] }).toArray(function(err, docs) {
+            socket.emit('more-kudos', docs)
+          });
+        } else {
+          collection.find({fb_id: fb_id, timestamp: {$lt: new Date(time)}}, { limit:10, sort:[['timestamp', 'desc']] }).toArray(function(err, docs) {
+            socket.emit('more-kudos', docs)
+          });
+        }
+      });
+    });
+    
+    // Filters
+    // All
+    
+    socket.on('all', function() {
+      db.collection('kudos', function(err, collection) {
+        collection.find({}, { limit:10, sort:[['timestamp', 'desc']] }).toArray(function(err, docs) {
+          socket.emit('feed', docs);
+        });
+      });
+    });
+    
+    // Me
+    socket.on('me', function(fb_id) {
+      db.collection('kudos', function(err, collection) {
+        collection.find({fb_id: fb_id}, { limit:10, sort:[['timestamp', 'desc']] }).toArray(function(err, docs) {
+          socket.emit('feed', docs, fb_id);
         });
       });
     });

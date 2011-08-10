@@ -28,12 +28,35 @@ window.fbAsyncInit = function() {
 }());
 
 function login() {
-    var fp = $('#login-panel').children('.facepile').detach();
     FB.api('me', function(response) {
+        //var fp = $('#login-panel').children('.facepile').detach();
         $('#login-panel').html("<img src='http://graph.facebook.com/" + response.username + "/picture'/><h3>" + response.name + "</h3><hr>");
-        $('#login-panel').append(fp);
+        //$('#login-panel').append(fp);
         loggedIn = response;
         $('#kudo-from').attr('value', response.name);
+        $('#filter').show();
+        $('#kudo-all').bind('click', function() {
+            if (!$(this).hasClass('selected')) {
+                var loader = $('#loader').detach();
+                $('#feed').empty();
+                loader.appendTo($('#feed')).show();
+                $('#filter .selected').removeClass('selected');
+                $(this).addClass('selected');
+                var socket = io.connect();
+                socket.emit('all');
+            }
+        });
+        $('#kudo-me').bind('click', function() {
+            if (!$(this).hasClass('selected')) {
+                var loader = $('#loader').detach();
+                $('#feed').empty();
+                loader.appendTo($('#feed')).show();
+                $('#filter .selected').removeClass('selected');
+                $(this).addClass('selected');
+                var socket = io.connect();
+                socket.emit('me', response.id);
+            }
+        });
     });
     
     FB.api('/me/friends', function(response) {
