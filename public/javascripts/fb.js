@@ -34,6 +34,7 @@ function login() {
         //$('#login-panel').append(fp);
         loggedIn = response;
         $('#kudo-from').attr('value', response.name);
+        $('#fb-post').show();
         $('#filter').show();
         $('#kudo-all').bind('click', function() {
             if (!$(this).hasClass('selected')) {
@@ -44,6 +45,7 @@ function login() {
                 $(this).addClass('selected');
                 var socket = io.connect();
                 socket.emit('all');
+                return false;
             }
         });
         $('#kudo-me').bind('click', function() {
@@ -55,6 +57,7 @@ function login() {
                 $(this).addClass('selected');
                 var socket = io.connect();
                 socket.emit('me', response.id);
+                return false;
             }
         });
     });
@@ -126,6 +129,6 @@ function publish(msg) {
         message: msg,
         picture: 'https://fbcdn-photos-a.akamaihd.net/photos-ak-snc1/v43/18/174692459266434/app_1_174692459266434_5640.gif',
         caption: 'Making Thank You Social',
-        description: 'Need description =/.'
+        description: 'People do nice things everyday, it\'s nice to get some recognition for good deeds.'
     });
 }

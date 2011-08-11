@@ -9,6 +9,7 @@
         console.log(message);
     });
     
+    // Load the feed with up to 10 kudos
     socket.on('feed', function(kudos, fb_id) {
         $('#loader').hide();
         $.each(kudos, function() {
@@ -22,10 +23,12 @@
         });
     });
     
+    // Add new posted kudos to the feed
     socket.on('new-kudo', function(kudo) {
         $('#feed').addKudoPre(kudo);
     });
     
+    // Show more kudos
     socket.on('more-kudos', function(kudos) {
         var see_more = $('#feed .more-kudo').detach();
         
@@ -43,13 +46,19 @@
             $('#feed').append(see_more);
         }
     });
+    
+    socket.on('error', function(reason) {
+        console.error('Unable to connect Socket.IO', reason);
+    });
 })();
 
 $.fn.addKudoPre = function(kudo) {
     if (kudo.fb) {
-        $(this).prepend("<div class='kudo'><img src='http://graph.facebook.com/" + kudo.fb.id + "/picture'/><p><strong><a href='" + getProfile(kudo.fb.id) + "'>" + kudo.from + "</a></strong>: Kudos to <strong>" + getLinks(kudo.to, kudo.to_id) + "</strong> for " + kudo.message + "</p><span class='timeago' title='" + kudo.timestamp + "'></span></div>");
+        var new_kudo = $("<div class='kudo'><img src='http://graph.facebook.com/" + kudo.fb.id + "/picture'/><p><strong><a href='" + getProfile(kudo.fb.id) + "'>" + kudo.from + "</a></strong>: Kudos to <strong>" + getLinks(kudo.to, kudo.to_id) + "</strong> for " + kudo.message + "</p><span class='timeago' title='" + kudo.timestamp + "'></span></div>").hide();
+        new_kudo.prependTo($(this)).slideDown('slow');
     } else {
-        $(this).prepend("<div class='kudo'><img src='/images/" + Math.ceil(Math.random()*4) + ".png' /><p><strong>" + kudo.from + "</strong>: Kudos to <strong>" + kudo.to + "</strong> for " + kudo.message + "</p><span class='timeago' title='" + kudo.timestamp + "'></span></div>");
+        var new_kudo = $("<div class='kudo'><img src='/images/" + Math.ceil(Math.random()*4) + ".png' /><p><strong>" + kudo.from + "</strong>: Kudos to <strong>" + kudo.to + "</strong> for " + kudo.message + "</p><span class='timeago' title='" + kudo.timestamp + "'></span></div>");
+        new_kudo.prependTo($(this)).slideDown('slow');
     }
     $('.timeago').timeago();
 }

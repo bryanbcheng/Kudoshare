@@ -22,6 +22,7 @@
         }
         
         if ($('#fb-post input[type=checkbox]').is(':checked')) {
+            //@[562372646:Lionel Cordier]
             publish("Kudos to " + $('#kudo-to').attr('value') + " for " + $('#kudo-message').attr('value'));
         }
         $('#kudoform').get(0).reset();
