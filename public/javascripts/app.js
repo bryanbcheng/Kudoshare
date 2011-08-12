@@ -12,15 +12,19 @@
     // Load the feed with up to 10 kudos
     socket.on('feed', function(kudos, fb_id) {
         $('#loader').hide();
-        $.each(kudos, function() {
-            $('#feed').addKudo(this);
-            $('.timeago').timeago();
-        });
-        $('#feed').append("<div class='more-kudo'><a href='#'>See more &#187;</a></div>");
-        $('#feed .more-kudo a').click(function() {
-            socket.emit('get', kudos[kudos.length - 1].timestamp, fb_id);
-            return false;
-        });
+        if (kudos != null) {
+            $.each(kudos, function() {
+                $('#feed').addKudo(this);
+                $('.timeago').timeago();
+            });
+            $('#feed').append("<div class='more-kudo'><a href='#'>See more &#187;</a></div>");
+            $('#feed .more-kudo a').click(function() {
+                socket.emit('get', kudos[kudos.length - 1].timestamp, fb_id);
+                return false;
+            });
+        } else {
+            $('#feed').append("<div class='more-kudo'>No more kudos. =/</div>");
+        }
     });
     
     // Add new posted kudos to the feed
@@ -29,18 +33,18 @@
     });
     
     // Show more kudos
-    socket.on('more-kudos', function(kudos) {
+    socket.on('more-kudos', function(kudos, fb_id) {
         var see_more = $('#feed .more-kudo').detach();
         
         if (kudos.length == 0) {
-            $('#feed').append("<div class='more-kudo'>No more kudos. =/</div>")
+            $('#feed').append("<div class='more-kudo'>No more kudos. =/</div>");
         } else {
         
             $.each(kudos, function() {
                 $('#feed').addKudo(this);
             });
             see_more.children('a').unbind('click').bind('click', function() {
-                socket.emit('get', kudos[kudos.length - 1].timestamp);
+                socket.emit('get', kudos[kudos.length - 1].timestamp, fb_id);
                 return false;
             });
             $('#feed').append(see_more);
