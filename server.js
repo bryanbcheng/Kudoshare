@@ -40,7 +40,7 @@ app.get('/', function(req, res) {
   });
 });
 
-app.listen(process.env.VMC_APP_PORT || 3000);
+app.listen(process.env["app_port"] || 3000);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
 
 // Start my Socket.io app and pass in the socket
