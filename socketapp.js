@@ -6,12 +6,9 @@ if (process.env.VCAP_SERVICES) {
   var env = JSON.parse(process.env.VCAP_SERVICES);
   var mongo = env['mongodb-1.8'][0]['credentials'];
 } else {
-  var mongo = {"hostname":"dbh36.mongolab.com", "port":27367, "username":"cheezburger", "password":"valefor", "name":"", "db":"kudoshare"}
-  //var mongo = {"hostname":"localhost", "port":27017, "username":"", "password":"", "name":"", "db":"kudoshare"}
+  var mongo = {"hostname":"dbh36.mongolab.com", "port":27367, "username":"toucan", "password":"yur45ks2p0sfg", "name":"", "db":"kudoshare"};
+  //var mongo = {"hostname":"localhost", "port":27017, "username":"", "password":"", "name":"", "db":"kudoshare"};
 }
-
-console.log(mongo);
-
 
 var generate_mongo_url = function(obj) {
   obj.hostname = (obj.hostname || 'localhost');
@@ -26,9 +23,6 @@ var generate_mongo_url = function(obj) {
 }
 
 var mongourl = generate_mongo_url(mongo);
-console.log(mongourl);
-
-
 
 //var db = new Db(mongo.db, new Server(mongo.hostname, mongo.port, {}), {});
 //db.open(function() {});
