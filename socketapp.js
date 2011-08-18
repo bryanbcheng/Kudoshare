@@ -6,7 +6,8 @@ if (process.env.VCAP_SERVICES) {
   var env = JSON.parse(process.env.VCAP_SERVICES);
   var mongo = env['mongodb-1.8'][0]['credentials'];
 } else {
-  var mongo = {"hostname":"localhost", "port":27017, "username":"", "password":"", "name":"", "db":"kudoshare"}
+  var mongo = {"hostname":"dbh36.mongolab.com", "port":27367, "username":"cheezburger", "password":"valefor", "name":"", "db":"kudoshare"}
+  //var mongo = {"hostname":"localhost", "port":27017, "username":"", "password":"", "name":"", "db":"kudoshare"}
 }
 
 console.log(mongo);
