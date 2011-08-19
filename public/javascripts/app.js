@@ -12,7 +12,7 @@
     // Load the feed with up to 10 kudos
     socket.on('feed', function(kudos, fb_id) {
         $('#loader').hide();
-        if (kudos != null) {
+        if (kudos != null && kudos.length != 0) {
             $.each(kudos, function() {
                 $('#feed').addKudo(this);
                 $('.timeago').timeago();

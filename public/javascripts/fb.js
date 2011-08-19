@@ -66,7 +66,8 @@ function login() {
         $.each(response.data, function(i, value) {
             value.label = value.name;
         });
-        friends = response.data;
+        friends = response.data.sort(sortByName);
+        friends;
         var select = false;
         $('#kudo-to')
 			.bind( "keydown", function( event ) {
@@ -111,6 +112,12 @@ function login() {
             }; 
     });
 };
+
+function sortByName(a, b) {
+    var x = a.name.toLowerCase();
+    var y = b.name.toLowerCase();
+    return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+}
 
 function getImage(id) {
     return "http://graph.facebook.com/" + id + "/picture";   
