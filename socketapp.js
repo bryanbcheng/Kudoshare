@@ -50,23 +50,17 @@ exports.start = function(io) {
     
     // Posting a new kudo
     socket.on('post', function(kudo) {
-        console.log("WTFFFF MUDDA PUKASHUUU");
       kudo.timestamp = new Date();
-      console.log("111UU");
       require('mongodb').connect(mongourl, function(err, db) {
-      console.log("22kjalskjdlasdj");
         db.collection('kudos', function(err, collection) {
-        console.log("3333alskdjfldsajfl");
           if (kudo.fb) {
-            console.log("444jlkasjlkdjasjdlasjl");
             collection.insert({ 'from':kudo.from, 'to':kudo.to, 'to_id':kudo.to_id, 'message':kudo.message, 'fb':true, 'fb_id':kudo.fb.id, 'timestamp':kudo.timestamp });
           } else {
-          console.log("55555alksjdlasjdjalj");
             collection.insert({ 'from':kudo.from, 'to':kudo.to, 'message':kudo.message, 'timestamp':kudo.timestamp });
           }
         });
       });
-      console.log("6666jaldkjfadljfl");
+      
       io.sockets.emit('new-kudo', kudo);
     });
     
