@@ -13,7 +13,7 @@ if (process.env.VCAP_SERVICES) {
 var generate_mongo_url = function(obj) {
   obj.hostname = (obj.hostname || 'localhost');
   obj.port = (obj.port || 27017);
-  obj.db = (obj.db || 'test');
+  obj.db = (obj.db || 'kudoshare');
 
   if (obj.username && obj.password) {
     return "mongodb://" + obj.username + ":" + obj.password + "@" + obj.hostname + ":" + obj.port + "/" + obj.db;
@@ -50,18 +50,23 @@ exports.start = function(io) {
     
     // Posting a new kudo
     socket.on('post', function(kudo) {
+        console.log("WTFFFF MUDDA PUKASHUUU");
       kudo.timestamp = new Date();
-      
+      console.log("111UU");
       require('mongodb').connect(mongourl, function(err, db) {
+      console.log("22kjalskjdlasdj");
         db.collection('kudos', function(err, collection) {
+        console.log("3333alskdjfldsajfl");
           if (kudo.fb) {
+            console.log("444jlkasjlkdjasjdlasjl");
             collection.insert({ 'from':kudo.from, 'to':kudo.to, 'to_id':kudo.to_id, 'message':kudo.message, 'fb':true, 'fb_id':kudo.fb.id, 'timestamp':kudo.timestamp });
           } else {
+          console.log("55555alksjdlasjdjalj");
             collection.insert({ 'from':kudo.from, 'to':kudo.to, 'message':kudo.message, 'timestamp':kudo.timestamp });
           }
         });
       });
-      
+      console.log("6666jaldkjfadljfl");
       io.sockets.emit('new-kudo', kudo);
     });
     
