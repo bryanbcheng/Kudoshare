@@ -135,6 +135,6 @@ function publish(msg) {
         message: msg,
         picture: 'https://fbcdn-photos-a.akamaihd.net/photos-ak-snc1/v43/18/174692459266434/app_1_174692459266434_5640.gif',
         caption: 'Making Thank You Social',
-        description: 'Give well-deserved recognition to your friends, family, or the nice anonymous stranger.'
+        description: 'Give a well-deserved recognition to your friends, family, or the nice anonymous stranger.'
     });
 }

@@ -34,6 +34,7 @@ var mongourl = generate_mongo_url(mongo);
 exports.start = function(io) {
   io.configure(function() {
     io.set('transports', [
+      'websocket',
       'xhr-polling'
     ]);
   });
