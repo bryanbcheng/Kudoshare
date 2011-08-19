@@ -81,7 +81,7 @@ function split( val ) {
 }
 
 function getLinks(to, to_id) {
-    if (to_id == "") return to;
+    if (to_id == "" || to_id == null) return to;
 
     var toArray = split(to);
     var idArray = split(to_id);
