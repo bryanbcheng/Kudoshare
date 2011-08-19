@@ -67,7 +67,6 @@ function login() {
             value.label = value.name;
         });
         friends = response.data.sort(sortByName);
-        friends;
         var select = false;
         $('#kudo-to')
 			.bind( "keydown", function( event ) {
