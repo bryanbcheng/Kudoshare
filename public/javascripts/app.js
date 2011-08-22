@@ -61,7 +61,7 @@ $.fn.addKudoPre = function(kudo) {
         var new_kudo = $("<div class='kudo'><img src='http://graph.facebook.com/" + kudo.fb.id + "/picture'/><p><strong><a href='" + getProfile(kudo.fb.id) + "'>" + kudo.from + "</a></strong>: Kudos to <strong>" + getLinks(kudo.to, kudo.to_id) + "</strong> " + kudo.message + "</p><span class='timeago' title='" + kudo.timestamp + "'></span></div>").hide();
         new_kudo.prependTo($(this)).slideDown('slow');
     } else {
-        var new_kudo = $("<div class='kudo'><img src='/images/" + Math.ceil(Math.random()*4) + ".png' /><p><strong>" + kudo.from + "</strong>: Kudos to <strong>" + kudo.to + "</strong> " + kudo.message + "</p><span class='timeago' title='" + kudo.timestamp + "'></span></div>");
+        var new_kudo = $("<div class='kudo'><img src='/images/" + "5" + ".png' /><p><strong>" + kudo.from + "</strong>: Kudos to <strong>" + kudo.to + "</strong> " + kudo.message + "</p><span class='timeago' title='" + kudo.timestamp + "'></span></div>");
         new_kudo.prependTo($(this)).slideDown('slow');
     }
     $('.timeago').timeago();
@@ -71,11 +71,11 @@ $.fn.addKudo = function(kudo) {
     if (kudo.fb) {
         $(this).append("<div class='kudo'><img src='http://graph.facebook.com/" + kudo.fb_id + "/picture'/><p><strong><a href='" + getProfile(kudo.fb_id) + "'>" + kudo.from + "</a></strong>: Kudos to <strong>" + getLinks(kudo.to, kudo.to_id) + "</strong> " + kudo.message + "</p><span class='timeago' title='" + kudo.timestamp + "'></span></div>");
     } else {
-        $(this).append("<div class='kudo'><img src='/images/" + Math.ceil(Math.random()*4) + ".png' /><p><strong>" + kudo.from + "</strong>: Kudos to <strong>" + kudo.to + "</strong> " + kudo.message + "</p><span class='timeago' title='" + kudo.timestamp + "'></span></div>");
+        $(this).append("<div class='kudo'><img src='/images/" + "5" + ".png' /><p><strong>" + kudo.from + "</strong>: Kudos to <strong>" + kudo.to + "</strong> " + kudo.message + "</p><span class='timeago' title='" + kudo.timestamp + "'></span></div>");
     }
     $('.timeago').timeago();
 };
-
+//Math.ceil(Math.random()*4)
 function split( val ) {
     return val.split( /,\s*/ );
 }
