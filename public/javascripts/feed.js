@@ -26,6 +26,7 @@
             publish("Kudos to " + $('#kudo-to').attr('value') + " thanks for " + $('#kudo-message').attr('value'));
         }
         $('#kudoform').get(0).reset();
+        $('#kudo-to-id').attr('value', '');
         return false;
     });
     
