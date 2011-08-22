@@ -134,7 +134,7 @@ function publish(msg) {
         name: 'KudoSHARE',
         message: msg,
         link: 'http://kudoshare.nodester.com',
-        picture: 'https://fbcdn-photos-a.akamaihd.net/photos-ak-snc1/v43/18/174692459266434/app_1_174692459266434_5640.gif',
+        picture: 'http://kudoshare.nodester.com/images/logo.png',
         caption: 'Making Thank You Social',
         description: 'Give a well-deserved recognition to your friends, family, or the nice anonymous stranger.'
     });
