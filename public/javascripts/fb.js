@@ -31,7 +31,7 @@ window.fbAsyncInit = function() {
 function login() {
     FB.api('me', function(response) {
         //var fp = $('#login-panel').children('.facepile').detach();
-        $('#login-panel').html("<img src='http://graph.facebook.com/" + response.username + "/picture'/><h3>" + response.name + "</h3><hr>");
+        $('#login-panel').html("<img src='http://graph.facebook.com/" + response.id + "/picture'/><h3>" + response.name + "</h3><hr>");
         //$('#login-panel').append(fp);
         loggedIn = response;
         $('#kudo-from').attr('value', response.name);
