@@ -1,5 +1,6 @@
 var friends = null;
 var loggedIn = false;
+var select = false;
 
 window.fbAsyncInit = function() {
     FB.init({appId: '174692459266434', status: true, cookie: true,
@@ -67,13 +68,12 @@ function login() {
             value.label = value.name;
         });
         friends = response.data.sort(sortByName);
-        var select = false;
         $('#kudo-to')
 			.bind( "keydown", function( event ) {
 				if ( event.keyCode === $.ui.keyCode.TAB &&
 						$( this ).data( "autocomplete" ).menu.active ) {
 					event.preventDefault();
-				} else if ( event.keyCode >= 65 || event.keyCode <= 90 ) {
+				} else if ( event.keyCode >= 65 && event.keyCode <= 90 ) {
                     if (select) {
                         this.value = this.value.slice(0 ,-1) + ", ";
                         select = false;
