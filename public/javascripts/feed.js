@@ -18,13 +18,13 @@
         if (loggedIn && $('#kudo-to-id').attr('value') != "") {
             socket.emit('post', { from: $('#kudo-from').attr('value'), to: $.trim($('#kudo-to').attr('value')), to_id: $('#kudo-to-id').attr('value'), message: $('#kudo-message').attr('value'), fb: loggedIn });
         } else {
-            socket.emit('post', { from: $('#kudo-from').attr('value'), to: $.trim($('#kudo-to').attr('value')), message: $('#kudo-message').attr('value'), fb: loggedIn });
+            socket.emit('post', { from: $('#kudo-from').attr('value'), to: $.trim($('#kudo-to').attr('value')), message: $('#kudo-message').attr('value'), fb: loggedIn }, $('#fb-post input[type=checkbox]').is(':checked'));
         }
         
-        if ($('#fb-post input[type=checkbox]').is(':checked')) {
+        /*if ($('#fb-post input[type=checkbox]').is(':checked')) {
             //@[562372646:Lionel Cordier]
             publish("Kudos to " + $('#kudo-to').attr('value') + " " + $('#kudo-message').attr('value'));
-        }
+        }*/
         $('#kudoform').get(0).reset();
         $('#kudo-to-id').attr('value', '');
         return false;

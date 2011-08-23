@@ -138,6 +138,6 @@ function publish(msg) {
         caption: 'Making Thank You Social',
         description: 'Give a well-deserved recognition to your friends, family, or the nice anonymous stranger.'
     }, function(response) {
-        $(this);
+        //find the correct kudo in database response.id;
     });
 }

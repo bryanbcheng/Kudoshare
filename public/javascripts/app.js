@@ -59,6 +59,10 @@
         }
     });
     
+    socket.on('publish', function(kudo) {
+        publish("Kudos to " + kudo.to + " " + kudo.message);
+    });
+    
     socket.on('error', function(reason) {
         console.error('Unable to connect Socket.IO', reason);
     });
