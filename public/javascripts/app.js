@@ -70,10 +70,10 @@
 
 $.fn.addKudoPre = function(kudo) {
     if (kudo.fb) {
-        var new_kudo = $("<div class='kudo'><img src='http://graph.facebook.com/" + kudo.fb.id + "/picture'/><p><strong><a href='" + getProfile(kudo.fb.id) + "'>" + kudo.from + "</a></strong>: Kudos to <strong>" + getLinks(kudo.to, kudo.to_id) + "</strong> " + kudo.message + "</p><span class='timeago' title='" + kudo.timestamp + "'></span></div>").hide();
+        var new_kudo = $("<div id='" + kudo._id + "' class='kudo'><img src='http://graph.facebook.com/" + kudo.fb.id + "/picture'/><p><strong><a href='" + getProfile(kudo.fb.id) + "'>" + kudo.from + "</a></strong>: Kudos to <strong>" + getLinks(kudo.to, kudo.to_id) + "</strong> " + kudo.message + "</p><span class='timeago' title='" + kudo.timestamp + "'></span></div>").hide();
         new_kudo.prependTo($(this)).slideDown('slow');
     } else {
-        var new_kudo = $("<div class='kudo'><img src='/images/" + "5" + ".png' /><p><strong>" + kudo.from + "</strong>: Kudos to <strong>" + kudo.to + "</strong> " + kudo.message + "</p><span class='timeago' title='" + kudo.timestamp + "'></span></div>");
+        var new_kudo = $("<div id='" + kudo._id + "' class='kudo'><img src='/images/" + "5" + ".png' /><p><strong>" + kudo.from + "</strong>: Kudos to <strong>" + kudo.to + "</strong> " + kudo.message + "</p><span class='timeago' title='" + kudo.timestamp + "'></span></div>");
         new_kudo.prependTo($(this)).slideDown('slow');
     }
     $('.timeago').timeago();
@@ -81,9 +81,9 @@ $.fn.addKudoPre = function(kudo) {
 
 $.fn.addKudo = function(kudo) {
     if (kudo.fb) {
-        $(this).append("<div class='kudo'><img src='http://graph.facebook.com/" + kudo.fb_id + "/picture'/><p><strong><a href='" + getProfile(kudo.fb_id) + "'>" + kudo.from + "</a></strong>: Kudos to <strong>" + getLinks(kudo.to, kudo.to_id) + "</strong> " + kudo.message + "</p><span class='timeago' title='" + kudo.timestamp + "'></span></div>");
+        $(this).append("<div id='" + kudo._id + "' class='kudo'><img src='http://graph.facebook.com/" + kudo.fb_id + "/picture'/><p><strong><a href='" + getProfile(kudo.fb_id) + "'>" + kudo.from + "</a></strong>: Kudos to <strong>" + getLinks(kudo.to, kudo.to_id) + "</strong> " + kudo.message + "</p><span class='timeago' title='" + kudo.timestamp + "'></span></div>");
     } else {
-        $(this).append("<div class='kudo'><img src='/images/" + "5" + ".png' /><p><strong>" + kudo.from + "</strong>: Kudos to <strong>" + kudo.to + "</strong> " + kudo.message + "</p><span class='timeago' title='" + kudo.timestamp + "'></span></div>");
+        $(this).append("<div id='" + kudo._id + "' class='kudo'><img src='/images/" + "5" + ".png' /><p><strong>" + kudo.from + "</strong>: Kudos to <strong>" + kudo.to + "</strong> " + kudo.message + "</p><span class='timeago' title='" + kudo.timestamp + "'></span></div>");
     }
     $('.timeago').timeago();
 };

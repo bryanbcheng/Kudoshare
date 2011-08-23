@@ -2,8 +2,6 @@ var mongodb = require('mongodb'),
     Db = mongodb.Db,
     Server = mongodb.Server,
     BSONPure = mongodb.BSONPure;
-    
-    console.log(mongodb);
 
 if (process.env.VCAP_SERVICES) {
   var env = JSON.parse(process.env.VCAP_SERVICES);
@@ -58,15 +56,18 @@ exports.start = function(io) {
         db.collection('kudos', function(err, collection) {
           if (kudo.fb) {
             collection.insert({ 'from':kudo.from, 'to':kudo.to, 'to_id':kudo.to_id, 'message':kudo.message, 'fb':true, 'fb_id':kudo.fb.id, 'timestamp':kudo.timestamp }, function(err, docs) {
-                socket.emit('publish', docs[0]);
+              socket.emit('publish', docs[0]);
+              io.sockets.emit('new-kudo', docs[0]);
             });
           } else {
-            collection.insert({ 'from':kudo.from, 'to':kudo.to, 'message':kudo.message, 'timestamp':kudo.timestamp });
+            collection.insert({ 'from':kudo.from, 'to':kudo.to, 'message':kudo.message, 'timestamp':kudo.timestamp }, function(err, docs) {
+              io.sockets.emit('new-kudo', docs[0]);
+            });
           }
         });
       });
       
-      io.sockets.emit('new-kudo', kudo);
+      //io.sockets.emit('new-kudo', kudo);
     });
     
     // Update a kudo with the Facebook post id
