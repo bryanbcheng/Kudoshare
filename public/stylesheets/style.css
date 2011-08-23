@@ -341,13 +341,13 @@ img#loader {
 
 #footer div.copyright {
     float: left;
-    margin: 30px 0 0 200px;
+    margin: 30px 0 0 175px;
     width: 400px;
 }
 
 #footer div.social-media {
     float: left;
-    margin: 30px 0 0 200px;
+    margin: 30px 0 0 125px;
 }
 
 /***** END FOOTER CSS *****/
