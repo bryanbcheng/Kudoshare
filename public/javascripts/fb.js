@@ -137,5 +137,7 @@ function publish(msg) {
         picture: 'http://kudoshare.nodester.com/images/logo.png',
         caption: 'Making Thank You Social',
         description: 'Give a well-deserved recognition to your friends, family, or the nice anonymous stranger.'
+    }, function(response) {
+        $(this);
     });
 }
