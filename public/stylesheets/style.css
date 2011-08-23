@@ -325,6 +325,10 @@ img#loader {
     display: none;
 }
 
+#login-panel .facepile {
+    margin: -10px 0 0 5px;
+}
+
 /***** FOOTER CSS *****/
 
 #footer {

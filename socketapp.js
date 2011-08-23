@@ -55,12 +55,10 @@ exports.start = function(io) {
         db.collection('kudos', function(err, collection) {
           if (kudo.fb) {
             collection.insert({ 'from':kudo.from, 'to':kudo.to, 'to_id':kudo.to_id, 'message':kudo.message, 'fb':true, 'fb_id':kudo.fb.id, 'timestamp':kudo.timestamp }, function(err, docs) {
-                
-            });
-          } else {
-            collection.insert({ 'from':kudo.from, 'to':kudo.to, 'message':kudo.message, 'timestamp':kudo.timestamp }, function(err, docs) {
                 socket.emit('publish', docs[0]);
             });
+          } else {
+            collection.insert({ 'from':kudo.from, 'to':kudo.to, 'message':kudo.message, 'timestamp':kudo.timestamp });
           }
         });
       });
