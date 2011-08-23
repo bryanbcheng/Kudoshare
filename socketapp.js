@@ -74,7 +74,10 @@ exports.start = function(io) {
     socket.on('post-id', function(kudo_id, post_id) {
       require('mongodb').connect(mongourl, function(err, db) {
         db.collection('kudos', function(err, collection) {
-          collection.findAndModify({ _id: new BSONPure.ObjectID(kudo_id) }, [], {$set: { post_id: post_id }});
+          collection.findAndModify({ _id: new BSONPure.ObjectID(kudo_id) }, [], {$set: { post_id: post_id }}, function(err, object) {
+                if (err) console.warn(err.message);
+                else console.log('successfully updated');
+            });
         });
       });
     });
