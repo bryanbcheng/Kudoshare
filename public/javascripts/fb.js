@@ -142,3 +142,9 @@ function publish(msg, kudo_id) {
         socket.emit('post-id', kudo_id, response.id);
     });
 }
+
+function addLike(kudo) {
+    FB.api(kudo.post_id, function(response) {
+        $(this);
+    });
+}

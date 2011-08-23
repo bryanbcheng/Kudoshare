@@ -82,6 +82,9 @@ $.fn.addKudoPre = function(kudo) {
 $.fn.addKudo = function(kudo) {
     if (kudo.fb) {
         $(this).append("<div id='" + kudo._id + "' class='kudo'><img src='http://graph.facebook.com/" + kudo.fb_id + "/picture'/><p><strong><a href='" + getProfile(kudo.fb_id) + "'>" + kudo.from + "</a></strong>: Kudos to <strong>" + getLinks(kudo.to, kudo.to_id) + "</strong> " + kudo.message + "</p><span class='timeago' title='" + kudo.timestamp + "'></span></div>");
+        if (kudo.post_id != null) {
+            addLike(kudo);
+        }
     } else {
         $(this).append("<div id='" + kudo._id + "' class='kudo'><img src='/images/" + "5" + ".png' /><p><strong>" + kudo.from + "</strong>: Kudos to <strong>" + kudo.to + "</strong> " + kudo.message + "</p><span class='timeago' title='" + kudo.timestamp + "'></span></div>");
     }
