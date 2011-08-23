@@ -138,13 +138,28 @@ function publish(msg, kudo_id) {
         caption: 'Making Thank You Social',
         description: 'Give a well-deserved recognition to your friends, family, or the nice anonymous stranger.'
     }, function(response) {
+        // updates database with post id
         var socket = io.connect();
         socket.emit('post-id', kudo_id, response.id);
     });
 }
 
 function addLike(kudo) {
-    FB.api(kudo.post_id, function(response) {
-        $(this);
+    FB.api(kudo.post_id + '/likes', function(response) {
+        if (response) {
+            var like_text = response.data.length > 0 ? " (" + response.data.length + ")" : "";
+            $('#' + kudo._id + ' .like').prepend("<a class='facebook_like' href='#'>Facebook Like" + like_text + "</a>");
+            // bind action
+            $('#' + kudo._id + ' .facebook_like').bind('click', function() {
+                FB.api(kudo.post_id + '/likes', 'post', function(response) {
+                    if (response) {
+                        //increase like count
+                        var flike = $('#' + kudo._id + ' .facebook_like');
+                        flike.html("Facebook Like (" + (Number(parse(flike.html())) + 1) + ")");
+                    }
+                });
+                return false;
+            });
+        }
     });
 }

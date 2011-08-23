@@ -249,6 +249,22 @@ body {
     font-size: 12px;
 }
 
+#feed .like {
+    color: #1D72A3;
+    float: right;
+    font-size: 12px;
+}
+
+#feed .like a {
+    color: inherit;
+    text-decoration: none;
+    margin: 0 0 0 10px;
+}
+
+#feed .like a:hover {
+    text-decoration: underline;
+}
+
 #feed .more-kudo {
     width: 200px;
     margin: 0 auto;

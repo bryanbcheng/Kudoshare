@@ -36,6 +36,10 @@
         $('#feed').addKudoPre(kudo);
     });
     
+    socket.on('update-like', function(kudo_id, like_count) {
+        $('#' + kudo_id + ' .kudo_like').html("Like (" + like_count + ")");
+    });
+    
     // Show more kudos
     socket.on('more-kudos', function(kudos, fb_id) {
         var see_more = $('#feed .more-kudo').detach();
@@ -69,24 +73,40 @@
 })();
 
 $.fn.addKudoPre = function(kudo) {
+    var new_kudo;
+    var like_text = kudo.likes ? " (" + kudo.likes + ")" : "";
+    
     if (kudo.fb) {
-        var new_kudo = $("<div id='" + kudo._id + "' class='kudo'><img src='http://graph.facebook.com/" + kudo.fb.id + "/picture'/><p><strong><a href='" + getProfile(kudo.fb.id) + "'>" + kudo.from + "</a></strong>: Kudos to <strong>" + getLinks(kudo.to, kudo.to_id) + "</strong> " + kudo.message + "</p><span class='timeago' title='" + kudo.timestamp + "'></span></div>").hide();
-        new_kudo.prependTo($(this)).slideDown('slow');
+        new_kudo = $("<div id='" + kudo._id + "' class='kudo'><img src='http://graph.facebook.com/" + kudo.fb_id + "/picture'/><p><strong><a href='" + getProfile(kudo.fb.id) + "'>" + kudo.from + "</a></strong>: Kudos to <strong>" + getLinks(kudo.to, kudo.to_id) + "</strong> " + kudo.message + "</p><span class='timeago' title='" + kudo.timestamp + "'></span><div class='like'><a class='kudo_like' href='#'>Like" + like_text + "</a></div></div>").hide();
     } else {
-        var new_kudo = $("<div id='" + kudo._id + "' class='kudo'><img src='/images/" + "5" + ".png' /><p><strong>" + kudo.from + "</strong>: Kudos to <strong>" + kudo.to + "</strong> " + kudo.message + "</p><span class='timeago' title='" + kudo.timestamp + "'></span></div>");
-        new_kudo.prependTo($(this)).slideDown('slow');
+        new_kudo = $("<div id='" + kudo._id + "' class='kudo'><img src='/images/" + "5" + ".png' /><p><strong>" + kudo.from + "</strong>: Kudos to <strong>" + kudo.to + "</strong> " + kudo.message + "</p><span class='timeago' title='" + kudo.timestamp + "'></span><div class='like'><a class='kudo_like' href='#'>Like" + like_text + "</a></div></div>");
     }
+    
+    new_kudo.find('.kudo_like').bind('click', function() {
+        like(kudo._id);
+        return false;
+    });
+    new_kudo.prependTo($(this)).slideDown('slow');
     $('.timeago').timeago();
 }
 
 $.fn.addKudo = function(kudo) {
+    var new_kudo;
+    var like_text = kudo.likes ? " (" + kudo.likes + ")" : "";
+    
     if (kudo.fb) {
-        $(this).append("<div id='" + kudo._id + "' class='kudo'><img src='http://graph.facebook.com/" + kudo.fb_id + "/picture'/><p><strong><a href='" + getProfile(kudo.fb_id) + "'>" + kudo.from + "</a></strong>: Kudos to <strong>" + getLinks(kudo.to, kudo.to_id) + "</strong> " + kudo.message + "</p><span class='timeago' title='" + kudo.timestamp + "'></span></div>");
-        if (kudo.post_id != null) {
-            addLike(kudo);
-        }
+        new_kudo = $("<div id='" + kudo._id + "' class='kudo'><img src='http://graph.facebook.com/" + kudo.fb_id + "/picture'/><p><strong><a href='" + getProfile(kudo.fb_id) + "'>" + kudo.from + "</a></strong>: Kudos to <strong>" + getLinks(kudo.to, kudo.to_id) + "</strong> " + kudo.message + "</p><span class='timeago' title='" + kudo.timestamp + "'></span><div class='like'><a class='kudo_like' href='#'>Like" + like_text + "</a></div></div>");
     } else {
-        $(this).append("<div id='" + kudo._id + "' class='kudo'><img src='/images/" + "5" + ".png' /><p><strong>" + kudo.from + "</strong>: Kudos to <strong>" + kudo.to + "</strong> " + kudo.message + "</p><span class='timeago' title='" + kudo.timestamp + "'></span></div>");
+        new_kudo = $("<div id='" + kudo._id + "' class='kudo'><img src='/images/" + "5" + ".png' /><p><strong>" + kudo.from + "</strong>: Kudos to <strong>" + kudo.to + "</strong> " + kudo.message + "</p><span class='timeago' title='" + kudo.timestamp + "'></span><div class='like'><a class='kudo_like' href='#'>Like" + like_text + "</a></div></div>");
+    }
+    
+    new_kudo.find('.kudo_like').bind('click', function() {
+        like(kudo._id);
+        return false;
+    });
+    $(this).append(new_kudo);
+    if (kudo.post_id != null) {
+        addLike(kudo);
     }
     $('.timeago').timeago();
 };
@@ -112,4 +132,17 @@ function getLinks(to, to_id) {
 
 function getProfile(id) {
     return "http://www.facebook.com/profile.php?id=" + id;
+}
+
+function like(kudo_id) {
+    var klike = $('#' + kudo_id).find('.kudo_like');
+    
+    var socket = io.connect();
+    socket.emit('like', kudo_id, parse(klike.html()) + 1);
+}
+
+function parse(like_text) {
+    var num_likes = like_text.match(/\((\d+)\)/);
+    if (num_likes) return num_likes[1];
+    else return 0;
 }

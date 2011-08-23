@@ -55,12 +55,12 @@ exports.start = function(io) {
       require('mongodb').connect(mongourl, function(err, db) {
         db.collection('kudos', function(err, collection) {
           if (kudo.fb) {
-            collection.insert({ 'from':kudo.from, 'to':kudo.to, 'to_id':kudo.to_id, 'message':kudo.message, 'fb':true, 'fb_id':kudo.fb.id, 'timestamp':kudo.timestamp }, function(err, docs) {
+            collection.insert({ 'from':kudo.from, 'to':kudo.to, 'to_id':kudo.to_id, 'message':kudo.message, 'fb':true, 'fb_id':kudo.fb.id, 'likes':0, 'timestamp':kudo.timestamp }, function(err, docs) {
               socket.emit('publish', docs[0]);
               io.sockets.emit('new-kudo', docs[0]);
             });
           } else {
-            collection.insert({ 'from':kudo.from, 'to':kudo.to, 'message':kudo.message, 'timestamp':kudo.timestamp }, function(err, docs) {
+            collection.insert({ 'from':kudo.from, 'to':kudo.to, 'message':kudo.message, 'likes':0, 'timestamp':kudo.timestamp }, function(err, docs) {
               io.sockets.emit('new-kudo', docs[0]);
             });
           }
@@ -69,6 +69,20 @@ exports.start = function(io) {
       
       //io.sockets.emit('new-kudo', kudo);
     });
+    
+    // Like a kudo
+    // NEED TO WORK WITH RACE CONDITIONS
+    socket.on('like', function(kudo_id, like_count) {
+      require('mongodb').connect(mongourl, function(err, db) {
+        db.collection('kudos', function(err, collection) {
+          collection.findAndModify({ _id: new BSONPure.ObjectID(kudo_id) }, [], {$set: { likes: like_count }}, function(err, object) {
+                if (err) console.warn(err.message);
+                else io.sockets.emit('update-like', kudo_id, like_count);
+            });
+        });
+      });
+    });
+    
     
     // Update a kudo with the Facebook post id
     
