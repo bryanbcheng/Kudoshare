@@ -129,7 +129,7 @@ function extractLast( term ) {
 	return split( term ).pop();
 }
 
-function publish(msg) {
+function publish(msg, kudo_id) {
     FB.api('/me/feed', 'post', {
         name: 'KudoSHARE',
         message: msg,
@@ -138,6 +138,7 @@ function publish(msg) {
         caption: 'Making Thank You Social',
         description: 'Give a well-deserved recognition to your friends, family, or the nice anonymous stranger.'
     }, function(response) {
-        //find the correct kudo in database response.id;
+        var socket = io.connect();
+        socket.emit('post-id', kudo_id, response.id);
     });
 }

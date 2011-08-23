@@ -1,6 +1,9 @@
 var mongodb = require('mongodb'),
     Db = mongodb.Db,
-    Server = mongodb.Server;
+    Server = mongodb.Server,
+    BSONPure = mongodb.BSONPure;
+    
+    console.log(mongodb);
 
 if (process.env.VCAP_SERVICES) {
   var env = JSON.parse(process.env.VCAP_SERVICES);
@@ -64,6 +67,16 @@ exports.start = function(io) {
       });
       
       io.sockets.emit('new-kudo', kudo);
+    });
+    
+    // Update a kudo with the Facebook post id
+    
+    socket.on('post-id', function(kudo_id, post_id) {
+      require('mongodb').connect(mongourl, function(err, db) {
+        db.collection('kudos', function(err, collection) {
+          collection.findAndModify({ _id: new BSONPure.ObjectID(kudo_id) }, [], {$set: { post_id: post_id }});
+        });
+      });
     });
     
     // See 10 more kudos

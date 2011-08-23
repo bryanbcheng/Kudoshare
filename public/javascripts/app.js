@@ -60,7 +60,7 @@
     });
     
     socket.on('publish', function(kudo) {
-        publish("Kudos to " + kudo.to + " " + kudo.message);
+        publish("Kudos to " + kudo.to + " " + kudo.message, kudo._id);
     });
     
     socket.on('error', function(reason) {
