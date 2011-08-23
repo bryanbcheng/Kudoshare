@@ -11,7 +11,8 @@
     
     // Load the feed with up to 10 kudos
     socket.on('feed', function(kudos, fb_id) {
-        $('#loader').hide();
+        var loader = $('#loader').hide().detach();
+        $('#feed').empty();
         if (kudos != null && kudos.length != 0) {
             $.each(kudos, function() {
                 $('#feed').addKudo(this);
@@ -20,8 +21,11 @@
             $('#feed').append("<div class='more-kudo'><a href='#'>See more &#187;</a></div>");
             $('#feed .more-kudo a').click(function() {
                 socket.emit('get', kudos[kudos.length - 1].timestamp, fb_id);
+                $('#feed .more-kudo').hide();
+                $('#loader').show();
                 return false;
             });
+            loader.appendTo($('#feed'));
         } else {
             $('#feed').append("<div class='more-kudo'>No more kudos. =/</div>");
         }
@@ -35,6 +39,7 @@
     // Show more kudos
     socket.on('more-kudos', function(kudos, fb_id) {
         var see_more = $('#feed .more-kudo').detach();
+        var loader = $('#loader').hide().detach();
         
         if (kudos.length == 0) {
             $('#feed').append("<div class='more-kudo'>No more kudos. =/</div>");
@@ -45,9 +50,12 @@
             });
             see_more.children('a').unbind('click').bind('click', function() {
                 socket.emit('get', kudos[kudos.length - 1].timestamp, fb_id);
+                $('#feed .more-kudo').hide();
+                $('#loader').show();
                 return false;
             });
-            $('#feed').append(see_more);
+            see_more.appendTo($('#feed')).show();
+            loader.appendTo($('#feed'));
         }
     });
     
