@@ -138,7 +138,7 @@ function like(kudo_id) {
     var klike = $('#' + kudo_id).find('.kudo_like');
     
     var socket = io.connect();
-    socket.emit('like', kudo_id, parse(klike.html()) + 1);
+    socket.emit('like', kudo_id, parseInt(klike.html()) + 1);
 }
 
 function parse(like_text) {
